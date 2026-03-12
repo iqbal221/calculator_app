@@ -24,4 +24,17 @@ class CalculatorProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  /// Theme Mode
+  ThemeMode themeMode = ThemeMode.dark;
+
+  void toggleTheme() {
+    if (themeMode == ThemeMode.dark) {
+      themeMode = ThemeMode.light;
+    } else {
+      themeMode = ThemeMode.dark;
+    }
+
+    notifyListeners();
+  }
 }
