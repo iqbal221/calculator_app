@@ -26,7 +26,7 @@ class CalculatorProvider extends ChangeNotifier {
   }
 
   /// Theme Mode
-  ThemeMode themeMode = ThemeMode.dark;
+  ThemeMode themeMode = ThemeMode.light;
 
   void toggleTheme() {
     if (themeMode == ThemeMode.dark) {
