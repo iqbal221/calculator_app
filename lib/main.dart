@@ -1,6 +1,7 @@
 import 'package:calculator_app/core/constants/app_theme.dart';
 import 'package:calculator_app/presentation/provider/calculator_provider.dart';
 import 'package:calculator_app/presentation/screen/calculator_screen.dart';
+import 'package:calculator_app/presentation/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        home: const CalculatorScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

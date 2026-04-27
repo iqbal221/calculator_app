@@ -11,8 +11,8 @@ class CalculatorGrid extends StatelessWidget {
     "cos",
     "tan",
     "log",
+    "⌫",
     "√",
-    "π",
     "x²",
     ".",
     "7",
@@ -41,7 +41,7 @@ class CalculatorGrid extends StatelessWidget {
 
   /// Determine if the button is an operator/scientific function
   bool isScientificOperator(String text) {
-    const operators = ["sin", "cos", "tan", "log", "π", "√", "x²"];
+    const operators = ["sin", "cos", "tan", "log", "⌫", "√", "x²"];
     return operators.contains(text);
   }
 

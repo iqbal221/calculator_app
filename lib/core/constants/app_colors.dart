@@ -20,4 +20,5 @@ class AppColors {
 
   /// operator button
   static const Color operatorButton = Color(0xFF1991FF);
+  static const Color splashScreen = Color(0xFF29A8FF);
 }

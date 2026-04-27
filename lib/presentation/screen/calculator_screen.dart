@@ -38,7 +38,10 @@ class CalculatorScreen extends StatelessWidget {
       body: Column(
         children: [
           const SizedBox(height: 10),
-          Expanded(flex: 2, child: DisplayScreen(value: calculator.input)),
+          Expanded(
+            flex: 2,
+            child: DisplayScreen(value: calculator.displayInput),
+          ),
           const SizedBox(height: 2),
           Expanded(
             flex: 8,

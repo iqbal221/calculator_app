@@ -43,7 +43,7 @@ class CalculatorButton extends StatelessWidget {
       textColor = calculator.themeMode == ThemeMode.dark
           ? AppColors.lightText
           : AppColors.darkText;
-      fontSize = 20;
+      fontSize = 22;
       padding = const EdgeInsets.symmetric(horizontal: 10, vertical: 4);
     } else if (clear) {
       bgColor = AppColors.clearButton;
