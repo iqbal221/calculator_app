@@ -1,17 +1,117 @@
-# calculator_app
+# 🧮 Calculator App
 
-A new Flutter project.
+A simple, fast, and beautifully designed **Calculator App** built with Flutter.
 
-## Getting Started
+Perform everyday calculations with a clean UI and smooth user experience.
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## ✨ Features
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+* 🔢 Basic arithmetic operations:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  * Addition (+)
+  * Subtraction (−)
+  * Multiplication (×)
+  * Division (÷)
+
+* 🧠 Smart input handling (multi-digit numbers)
+
+* 🧮 Real-time calculation
+
+* 🎯 Accurate results
+
+* 🌙 Dark theme UI
+
+* 🧩 Clean and minimal design
+
+---
+
+## 📸 Screenshots
+
+### 🏠 Dark Screen
+
+<p>
+  <img src="https://github.com/iqbal221/calculator_app/blob/main/dark.png" width="250">
+</p>
+
+### 🔢 Light Screen
+
+<p>
+  <img src="https://github.com/iqbal221/calculator_app/blob/main/light.png" width="250">
+</p>
+
+### 🔢 Light Input Screen
+
+<p>
+  <img src="https://github.com/iqbal221/calculator_app/blob/main/light%20input.png" width="250">
+</p>
+
+---
+
+## 🛠️ Tech Stack
+
+* Flutter
+* Dart
+* Material UI
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/your-username/calculator-app.git
+```
+
+### 2. Install dependencies
+
+```bash
+flutter pub get
+```
+
+### 3. Run the app
+
+```bash
+flutter run
+```
+
+---
+
+## 📦 Build APK
+
+```bash
+flutter build apk --release
+```
+
+---
+
+## 🎯 App Structure
+
+* `presentation/` → UI Screens
+* `widgets/` → Reusable Components
+* `core/` → Constants & Utilities
+* `provider/` → State Management
+
+---
+
+## 🔮 Future Improvements
+
+* 🧮 Scientific Calculator Mode
+* 📜 Calculation History
+* 🎨 Theme Customization
+* 🔊 Sound & Haptic Feedback
+
+---
+
+## 👨‍💻 Developer
+
+**Md Zahed Iqbal**
+Flutter Developer 🚀
+
+---
+
+## ⭐ Support
+
+If you like this project, give it a ⭐ on GitHub!
