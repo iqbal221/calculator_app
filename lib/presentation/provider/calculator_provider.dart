@@ -6,6 +6,7 @@ class CalculatorProvider extends ChangeNotifier {
   String input = ""; // internal (used for calculation)
   String displayInput = ""; // shown in UI
   String result = "0";
+  bool showHistoryView = false;
 
   List<HistoryModel> history = [];
 
@@ -20,51 +21,35 @@ class CalculatorProvider extends ChangeNotifier {
 
       history.add(HistoryModel(expression: displayInput, result: result));
 
-      input = result;
-      displayInput = result;
-    }
-    /// 🔥 FIXED BACKSPACE
-    else if (value == "⌫") {
-      if (displayInput.isEmpty) return;
-
-      /// Handle function removal
-      for (var func in functions) {
-        if (displayInput.endsWith(func)) {
-          input = input.substring(
-            0,
-            input.length - (func.length + 1),
-          ); // remove func(
-          displayInput = displayInput.substring(
-            0,
-            displayInput.length - func.length,
-          );
-          notifyListeners();
-          return;
-        }
-      }
-
-      /// Normal character remove
-      input = input.substring(0, input.length - 1);
-      displayInput = displayInput.substring(0, displayInput.length - 1);
+      /// ✅ Switch UI mode
+      showHistoryView = true;
     } else if (value == "C") {
       input = "";
       displayInput = "";
       result = "0";
+
+      /// ✅ Reset UI
+      showHistoryView = false;
+    } else if (value == "⌫") {
+      if (displayInput.isEmpty) return;
+
+      displayInput = displayInput.substring(0, displayInput.length - 1);
+      input = input.substring(0, input.length - 1);
+
+      /// ✅ Back to input mode
+      showHistoryView = false;
     } else {
-      /// ✅ Function input
+      /// ✅ New input → reset mode
+      showHistoryView = false;
+
       if (functions.contains(value)) {
         input += "$value(";
         displayInput += value;
-      }
-      /// ✅ Operator
-      else if (_isOperator(value)) {
+      } else if (_isOperator(value)) {
         _closeFunctionIfNeeded();
-
         input += value;
         displayInput += value;
-      }
-      /// ✅ Normal number / dot
-      else {
+      } else {
         input += value;
         displayInput += value;
       }

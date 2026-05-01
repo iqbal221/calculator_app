@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   /// Light Theme Colors
-  static const Color lightBackground = Color(0xFFF7F8FB);
-  // static const Color lightBackground = Color(0xFFE0E0E0);
-  static const Color lightButton = Color(0xFFFFFFFF);
+  // static const Color lightBackground = Color(0xFFF7F8FB);
+  static const Color lightBackground = Color(0xFFFFFFFF);
+  // static const Color lightButton = Color(0xFFFFFFFF);
+  static const Color lightButton = Color(0xFFF7F8FB);
   // static const Color lightOperator = Color(0xFF1991FF);
   static const Color lightText = Color(0xFF1991FF);
 

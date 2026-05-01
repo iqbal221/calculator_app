@@ -2,6 +2,7 @@ import 'package:calculator_app/presentation/provider/calculator_provider.dart';
 import 'package:calculator_app/presentation/widgets/calculator_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class CalculatorGrid extends StatelessWidget {
   CalculatorGrid({super.key});
@@ -41,7 +42,7 @@ class CalculatorGrid extends StatelessWidget {
 
   /// Determine if the button is an operator/scientific function
   bool isScientificOperator(String text) {
-    const operators = ["sin", "cos", "tan", "log", "⌫", "√", "x²"];
+    const operators = ["sin", "cos", "tan", "log", "⌫", "√", "x²", "."];
     return operators.contains(text);
   }
 
@@ -59,30 +60,28 @@ class CalculatorGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<CalculatorProvider>(context);
 
-    return GridView.builder(
+    return MasonryGridView.count(
+      crossAxisCount: 4,
+      mainAxisSpacing: 18,
+      crossAxisSpacing: 18,
       itemCount: buttons.length,
-
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        mainAxisSpacing: 18,
-        crossAxisSpacing: 18,
-      ),
-
       itemBuilder: (context, index) {
         final buttonText = buttons[index];
+
         final operator = isOperator(buttonText);
         final scientificOperator = isScientificOperator(buttonText);
         final clear = isClearButton(buttonText);
         final equal = isEqualButton(buttonText);
 
         return CalculatorButton(
-          text: buttons[index],
+          text: buttonText,
           scientificOperator: scientificOperator,
           operator: operator,
           clear: clear,
           equal: equal,
+          isSmall: scientificOperator,
           onTap: () {
-            provider.addInput(buttons[index]);
+            provider.addInput(buttonText);
           },
         );
       },

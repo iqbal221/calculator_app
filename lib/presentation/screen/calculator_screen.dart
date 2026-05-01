@@ -37,16 +37,13 @@ class CalculatorScreen extends StatelessWidget {
 
       body: Column(
         children: [
-          const SizedBox(height: 10),
-          Expanded(
-            flex: 2,
-            child: DisplayScreen(value: calculator.displayInput),
-          ),
+          const SizedBox(height: 15),
+          Expanded(flex: 2, child: DisplayScreen()),
           const SizedBox(height: 2),
           Expanded(
             flex: 8,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
 
               child: CalculatorGrid(),
             ),

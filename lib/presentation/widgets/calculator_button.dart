@@ -10,6 +10,7 @@ class CalculatorButton extends StatelessWidget {
   final bool scientificOperator;
   final bool equal;
   final bool clear;
+  final bool isSmall;
 
   const CalculatorButton({
     super.key,
@@ -19,6 +20,7 @@ class CalculatorButton extends StatelessWidget {
     required this.scientificOperator,
     required this.equal,
     required this.clear,
+    required this.isSmall,
   });
 
   @override
@@ -68,21 +70,31 @@ class CalculatorButton extends StatelessWidget {
       padding = const EdgeInsets.all(16);
     }
 
-    return ElevatedButton(
-      onPressed: onTap,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: bgColor,
-        foregroundColor: textColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        padding: padding,
-        elevation: 3,
-        // IMPORTANT
-        minimumSize: Size.zero,
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      ),
-      child: Text(
-        text,
-        style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
+    return SizedBox(
+      height: isSmall ? 60 : 80, // 🔥 smaller vs normal
+      width: isSmall ? 60 : 80,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: bgColor,
+          foregroundColor: textColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          padding: padding,
+          elevation: 2,
+
+          // IMPORTANT
+          minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: isSmall ? 20 : fontSize, // 🔥 smaller text too
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
     );
   }
