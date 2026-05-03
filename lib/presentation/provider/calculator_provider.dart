@@ -3,17 +3,20 @@ import 'package:calculator_app/data/service/calculator_service.dart';
 import 'package:flutter/material.dart';
 
 class CalculatorProvider extends ChangeNotifier {
-  String input = ""; // internal (used for calculation)
-  String displayInput = ""; // shown in UI
+  String input = "";
+  String displayInput = "";
   String result = "0";
   bool showHistoryView = false;
 
   List<HistoryModel> history = [];
 
-  /// List of functions
+  /// Functions
   final List<String> functions = ["sin", "cos", "tan", "cot", "log", "ln"];
 
   void addInput(String value) {
+    /// =========================
+    /// EQUAL
+    /// =========================
     if (value == "=") {
       _autoCloseBracket();
 
@@ -21,35 +24,86 @@ class CalculatorProvider extends ChangeNotifier {
 
       history.add(HistoryModel(expression: displayInput, result: result));
 
-      /// ✅ Switch UI mode
       showHistoryView = true;
-    } else if (value == "C") {
+    }
+    /// =========================
+    /// CLEAR
+    /// =========================
+    else if (value == "C") {
       input = "";
       displayInput = "";
       result = "0";
-
-      /// ✅ Reset UI
       showHistoryView = false;
-    } else if (value == "⌫") {
+    }
+    /// =========================
+    /// BACKSPACE (SMART)
+    /// =========================
+    else if (value == "⌫") {
       if (displayInput.isEmpty) return;
 
-      displayInput = displayInput.substring(0, displayInput.length - 1);
-      input = input.substring(0, input.length - 1);
+      /// 🔥 Handle special tokens properly
+      if (displayInput.endsWith("π")) {
+        input = input.substring(0, input.length - 12); // remove 3.1415926535
+        displayInput = displayInput.substring(0, displayInput.length - 1);
+      }
+      // else if (displayInput.endsWith("³√")) {
+      //   input = input.substring(0, input.length - 2);
+      //   displayInput = displayInput.substring(0, displayInput.length - 2);
+      // }
+      else if (displayInput.endsWith("³√(")) {
+        input = input.substring(0, input.length - 3);
+        displayInput = displayInput.substring(0, displayInput.length - 3);
+      } else if (displayInput.endsWith("n!")) {
+        input = input.substring(0, input.length - 1);
+        displayInput = displayInput.substring(0, displayInput.length - 2);
+      } else {
+        input = input.substring(0, input.length - 1);
+        displayInput = displayInput.substring(0, displayInput.length - 1);
+      }
 
-      /// ✅ Back to input mode
       showHistoryView = false;
-    } else {
-      /// ✅ New input → reset mode
+    }
+    /// =========================
+    /// NORMAL INPUT
+    /// =========================
+    else {
       showHistoryView = false;
 
-      if (functions.contains(value)) {
+      /// 🔥 SPECIAL BUTTONS
+
+      /// π
+      if (value == "π") {
+        input += "π";
+        displayInput += "π";
+      }
+      /// %
+      else if (value == "%") {
+        input += "%";
+        displayInput += "%";
+      }
+      /// factorial
+      else if (value == "n!") {
+        input += "!";
+        displayInput += "!";
+      }
+      /// cube root
+      else if (value == "³√") {
+        input += "³√";
+        displayInput += "³√";
+      }
+      /// FUNCTIONS
+      else if (functions.contains(value)) {
         input += "$value(";
         displayInput += value;
-      } else if (_isOperator(value)) {
+      }
+      /// OPERATORS
+      else if (_isOperator(value)) {
         _closeFunctionIfNeeded();
         input += value;
         displayInput += value;
-      } else {
+      }
+      /// NORMAL NUMBERS
+      else {
         input += value;
         displayInput += value;
       }
@@ -62,7 +116,7 @@ class CalculatorProvider extends ChangeNotifier {
     return ["+", "-", "×", "÷"].contains(value);
   }
 
-  /// 🔥 Close function safely
+  /// Close function safely
   void _closeFunctionIfNeeded() {
     int open = '('.allMatches(input).length;
     int close = ')'.allMatches(input).length;
@@ -72,7 +126,7 @@ class CalculatorProvider extends ChangeNotifier {
     }
   }
 
-  /// 🔥 Auto close all brackets
+  /// Auto close all brackets
   void _autoCloseBracket() {
     int open = '('.allMatches(input).length;
     int close = ')'.allMatches(input).length;
@@ -83,7 +137,7 @@ class CalculatorProvider extends ChangeNotifier {
     }
   }
 
-  /// Theme Mode
+  /// Theme
   ThemeMode themeMode = ThemeMode.light;
 
   void toggleTheme() {

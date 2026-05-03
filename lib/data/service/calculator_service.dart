@@ -6,23 +6,72 @@ class CalculatorService {
     try {
       expression = expression.replaceAll(' ', '');
 
-      /// Replace UI operators
+      /// UI operators
       expression = expression.replaceAll('×', '*');
       expression = expression.replaceAll('÷', '/');
 
-      /// Replace π with actual value
+      /// π
       expression = expression.replaceAll('π', pi.toString());
 
-      /// Power
+      /// x²
       expression = expression.replaceAll('x²', '^2');
 
-      /// Square root
-      expression = expression.replaceAllMapped(
-        RegExp(r'√(\d+(\.\d+)?)'),
-        (match) => sqrt(double.parse(match.group(1)!)).toString(),
-      );
+      /// % → divide by 100
+      expression = expression.replaceAllMapped(RegExp(r'(\d+(\.\d+)?)%'), (
+        match,
+      ) {
+        double value = double.parse(match.group(1)!);
+        return (value / 100).toString();
+      });
 
-      /// Handle sin, cos, tan (MANUAL calculation)
+      // /// 🔥 ³√ (cube root)
+      // expression = expression.replaceAllMapped(RegExp(r'³√(\d+(\.\d+)?)'), (
+      //   match,
+      // ) {
+      //   double value = double.parse(match.group(1)!);
+      //   return pow(value, 1 / 3).toDouble().toString();
+      // });
+
+      // Cube root handling
+      /// ✅ Handle ³√(expression)
+      /// ✅ Handle ³√number (no brackets)
+      expression = expression.replaceAllMapped(RegExp(r'³√(\d+(\.\d+)?)'), (
+        match,
+      ) {
+        double value = double.parse(match.group(1)!);
+
+        double result;
+
+        if (value >= 0) {
+          result = pow(value, 1 / 3).toDouble();
+        } else {
+          result = -pow(value.abs(), 1 / 3).toDouble();
+        }
+
+        if ((result - result.round()).abs() < 1e-10) {
+          result = result.roundToDouble();
+        }
+
+        return result.toString();
+      });
+
+      /// √ (square root)
+      expression = expression.replaceAllMapped(RegExp(r'√(\d+(\.\d+)?)'), (
+        match,
+      ) {
+        double value = double.parse(match.group(1)!);
+        return sqrt(value).toString();
+      });
+
+      print("Before eval: $expression");
+
+      /// 🔥 Factorial (n!)
+      expression = expression.replaceAllMapped(RegExp(r'(\d+)!'), (match) {
+        int value = int.parse(match.group(1)!);
+        return _factorial(value).toString();
+      });
+
+      /// sin, cos, tan (degree)
       expression = expression.replaceAllMapped(
         RegExp(r'(sin|cos|tan)\(([^)]+)\)'),
         (match) {
@@ -41,38 +90,38 @@ class CalculatorService {
               result = cos(rad);
               break;
             case 'tan':
+              if (value % 180 == 90) return "Error";
               result = tan(rad);
               break;
             default:
               result = 0;
           }
 
-          /// 🔥 FIX PRECISION
           if (result.abs() < 1e-10) result = 0;
-
-          /// 🔥 HANDLE tan(90), tan(270)
-          if (func == 'tan' && (value % 180 == 90)) {
-            return "Error"; // or "∞"
-          }
 
           return result.toString();
         },
       );
 
-      /// Handle log (base 10)
+      /// log base 10
       expression = expression.replaceAllMapped(RegExp(r'log\(([^)]+)\)'), (
         match,
       ) {
         final value = double.parse(match.group(1)!);
-
         if (value <= 0) return "Error";
-
-        final result = log(value) / ln10; // log10(x)
-
-        return result.toString();
+        return (log(value) / ln10).toString();
       });
 
-      /// Evaluate remaining expression
+      /// ln
+      expression = expression.replaceAllMapped(RegExp(r'ln\(([^)]+)\)'), (
+        match,
+      ) {
+        final value = double.parse(match.group(1)!);
+        if (value <= 0) return "Error";
+        return log(value).toString();
+      });
+
+      /// 🔥 FINAL EVALUATION
       final result = expression.interpret();
 
       /// Format result
@@ -84,5 +133,17 @@ class CalculatorService {
     } catch (e) {
       return "Error";
     }
+  }
+
+  /// 🔥 Factorial function
+  static int _factorial(int n) {
+    if (n < 0) return 0;
+    if (n == 0 || n == 1) return 1;
+
+    int result = 1;
+    for (int i = 2; i <= n; i++) {
+      result *= i;
+    }
+    return result;
   }
 }

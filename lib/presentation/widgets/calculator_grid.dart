@@ -16,6 +16,10 @@ class CalculatorGrid extends StatelessWidget {
     "√",
     "x²",
     ".",
+    "π",
+    "n!",
+    "³√",
+    "%",
     "7",
     "8",
     "9",
@@ -34,57 +38,57 @@ class CalculatorGrid extends StatelessWidget {
     "+",
   ];
 
-  /// Determine if the button is an operator/scientific function
-  bool isOperator(String text) {
-    const operators = ["÷", "×", "-", "+"];
-    return operators.contains(text);
-  }
+  bool isOperator(String text) => ["÷", "×", "-", "+"].contains(text);
 
-  /// Determine if the button is an operator/scientific function
-  bool isScientificOperator(String text) {
-    const operators = ["sin", "cos", "tan", "log", "⌫", "√", "x²", "."];
-    return operators.contains(text);
-  }
+  bool isScientificOperator(String text) => [
+    "sin",
+    "cos",
+    "tan",
+    "log",
+    "⌫",
+    "√",
+    "x²",
+    ".",
+    "π",
+    "n!",
+    "³√",
+    "%",
+  ].contains(text);
 
-  bool isClearButton(String text) {
-    const operators = ["C"];
-    return operators.contains(text);
-  }
-
-  bool isEqualButton(String text) {
-    const operators = ["="];
-    return operators.contains(text);
-  }
+  bool isClearButton(String text) => text == "C";
+  bool isEqualButton(String text) => text == "=";
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CalculatorProvider>(context);
 
-    return MasonryGridView.count(
-      crossAxisCount: 4,
-      mainAxisSpacing: 18,
-      crossAxisSpacing: 18,
-      itemCount: buttons.length,
-      itemBuilder: (context, index) {
-        final buttonText = buttons[index];
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: StaggeredGrid.count(
+        crossAxisCount: 4,
+        mainAxisSpacing: 12,
+        crossAxisSpacing: 12,
 
-        final operator = isOperator(buttonText);
-        final scientificOperator = isScientificOperator(buttonText);
-        final clear = isClearButton(buttonText);
-        final equal = isEqualButton(buttonText);
+        children: buttons.map((text) {
+          final isScientific = isScientificOperator(text);
 
-        return CalculatorButton(
-          text: buttonText,
-          scientificOperator: scientificOperator,
-          operator: operator,
-          clear: clear,
-          equal: equal,
-          isSmall: scientificOperator,
-          onTap: () {
-            provider.addInput(buttonText);
-          },
-        );
-      },
+          return StaggeredGridTile.count(
+            crossAxisCellCount: 1,
+
+            // 👇 smaller scientific buttons
+            mainAxisCellCount: isScientific ? 0.7 : .98,
+
+            child: CalculatorButton(
+              text: text,
+              scientificOperator: isScientific,
+              operator: isOperator(text),
+              clear: isClearButton(text),
+              equal: isEqualButton(text),
+              onTap: () => provider.addInput(text),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }

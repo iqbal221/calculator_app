@@ -10,7 +10,6 @@ class CalculatorButton extends StatelessWidget {
   final bool scientificOperator;
   final bool equal;
   final bool clear;
-  final bool isSmall;
 
   const CalculatorButton({
     super.key,
@@ -20,7 +19,6 @@ class CalculatorButton extends StatelessWidget {
     required this.scientificOperator,
     required this.equal,
     required this.clear,
-    required this.isSmall,
   });
 
   @override
@@ -32,68 +30,69 @@ class CalculatorButton extends StatelessWidget {
     double fontSize;
     EdgeInsets padding;
 
-    // Operator buttons
-    if (operator) {
+    /// 🔵 Scientific (smaller look)
+    if (scientificOperator) {
+      bgColor = calculator.themeMode == ThemeMode.dark
+          ? AppColors.lightButton
+          : AppColors.darkButton;
+
+      textColor = calculator.themeMode == ThemeMode.dark
+          ? AppColors.lightText
+          : AppColors.darkText;
+
+      fontSize = 20;
+      padding = const EdgeInsets.all(8);
+    }
+    /// 🔴 Operator
+    else if (operator) {
       bgColor = AppColors.operatorButton;
       textColor = Colors.white;
-      fontSize = 36;
-      padding = const EdgeInsets.all(16);
-    } else if (scientificOperator) {
-      bgColor = calculator.themeMode == ThemeMode.dark
-          ? AppColors.lightButton
-          : AppColors.darkButton;
-      textColor = calculator.themeMode == ThemeMode.dark
-          ? AppColors.lightText
-          : AppColors.darkText;
-      fontSize = 22;
-      padding = const EdgeInsets.symmetric(horizontal: 10, vertical: 4);
-    } else if (clear) {
+      fontSize = 32;
+      padding = const EdgeInsets.all(12);
+    }
+    /// 🟢 Clear
+    else if (clear) {
       bgColor = AppColors.clearButton;
       textColor = Colors.white;
-      fontSize = 36;
-      padding = const EdgeInsets.all(16);
-    } else if (equal) {
+      fontSize = 32;
+      padding = const EdgeInsets.all(12);
+    }
+    /// 🟠 Equal
+    else if (equal) {
       bgColor = AppColors.equalButton;
       textColor = Colors.white;
-
-      fontSize = 36;
-      padding = const EdgeInsets.all(16);
-    } else {
-      // Number buttons
+      fontSize = 32;
+      padding = const EdgeInsets.all(12);
+    }
+    /// ⚪ Numbers
+    else {
       bgColor = calculator.themeMode == ThemeMode.dark
           ? AppColors.lightButton
           : AppColors.darkButton;
+
       textColor = calculator.themeMode == ThemeMode.dark
           ? AppColors.lightText
           : AppColors.darkText;
-      fontSize = 36;
-      padding = const EdgeInsets.all(16);
+
+      fontSize = 32;
+      padding = const EdgeInsets.all(12);
     }
 
-    return SizedBox(
-      height: isSmall ? 60 : 80, // 🔥 smaller vs normal
-      width: isSmall ? 60 : 80,
-      child: ElevatedButton(
-        onPressed: onTap,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: bgColor,
-          foregroundColor: textColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          padding: padding,
-          elevation: 2,
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: bgColor,
+        foregroundColor: textColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        padding: padding,
+        elevation: 2,
+      ),
 
-          // IMPORTANT
-          minimumSize: Size.zero,
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        ),
+      child: Center(
         child: Text(
           text,
-          style: TextStyle(
-            fontSize: isSmall ? 20 : fontSize, // 🔥 smaller text too
-            fontWeight: FontWeight.bold,
-          ),
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
         ),
       ),
     );

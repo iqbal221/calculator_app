@@ -13,6 +13,7 @@ class DisplayScreen extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -24,12 +25,12 @@ class DisplayScreen extends StatelessWidget {
               style: const TextStyle(fontSize: 24, color: Colors.grey),
             ),
 
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
 
           /// 🔥 Main display
           Expanded(
             child: SizedBox(
-              height: 100, // 🔥 constrain height
+              height: 110, // 🔥 constrain height
               child: AutoSizeText(
                 provider.showHistoryView
                     ? provider.result
@@ -37,7 +38,7 @@ class DisplayScreen extends StatelessWidget {
                           ? "0"
                           : provider.displayInput),
                 maxLines: 2,
-                minFontSize: 20,
+                minFontSize: 30,
                 stepGranularity: 2,
                 textAlign: TextAlign.right,
                 style: TextStyle(

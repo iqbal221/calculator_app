@@ -35,20 +35,21 @@ class CalculatorScreen extends StatelessWidget {
         ],
       ),
 
-      body: Column(
-        children: [
-          const SizedBox(height: 15),
-          Expanded(flex: 2, child: DisplayScreen()),
-          const SizedBox(height: 2),
-          Expanded(
-            flex: 8,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(flex: 2, child: DisplayScreen()),
 
-              child: CalculatorGrid(),
+            Expanded(
+              flex: 8,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+
+                child: CalculatorGrid(),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
