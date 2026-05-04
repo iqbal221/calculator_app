@@ -43,7 +43,7 @@ class CalculatorScreen extends StatelessWidget {
             Expanded(
               flex: 8,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
+                padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 0),
 
                 child: CalculatorGrid(),
               ),
