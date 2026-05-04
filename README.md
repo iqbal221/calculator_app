@@ -44,13 +44,7 @@ Perform everyday calculations with a clean UI and smooth user experience.
 ### 🔢 Light Input Screen
 
 <p>
-  <img src="https://github.com/iqbal221/calculator_app/blob/main/light_input.png" width="250">
-</p>
-
-### 🔢 Light Result Screen
-
-<p>
-  <img src="https://github.com/iqbal221/calculator_app/blob/main/light_result.png" width="250">
+  <img src="https://github.com/iqbal221/calculator_app/blob/main/light%20input.png" width="250">
 </p>
 
 ---
